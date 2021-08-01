@@ -12,3 +12,8 @@ variable "release_branch" {
   type    = string
   default = "release"
 }
+
+variable "release_tag" {
+  type    = string
+  default = "release"
+}

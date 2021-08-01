@@ -21,7 +21,7 @@ data "template_file" "buildspec" {
 
   vars = {
     region         = var.region
-    tag            = "${data.aws_ecr_repository.simple_bratch.name}:latest"
-    repository_tag = "${data.aws_ecr_repository.simple_bratch.repository_url}:latest"
+    tag            = "${data.aws_ecr_repository.simple_bratch.name}:${var.release_tag}"
+    repository_tag = "${data.aws_ecr_repository.simple_bratch.repository_url}:${var.release_tag}"
   }
 }

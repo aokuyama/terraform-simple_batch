@@ -60,6 +60,7 @@ resource "aws_iam_role" "codebuild" {
     aws_iam_policy.push_ecr.arn,
     aws_iam_policy.git_pull.arn,
     aws_iam_policy.log_codebuild.arn,
+    aws_iam_policy.operate_s3.arn,
   ]
 }
 
@@ -147,6 +148,30 @@ resource "aws_iam_policy" "log_codebuild" {
           Effect = "Allow"
           Resource = [
             "arn:aws:codebuild:${var.region}:${data.aws_caller_identity.self.account_id}:report-group/${var.project_name}-*",
+          ]
+        },
+      ]
+      Version = "2012-10-17"
+    }
+  )
+}
+
+resource "aws_iam_policy" "operate_s3" {
+  path = "/service-role/"
+  policy = jsonencode(
+    {
+      Statement = [
+        {
+          Action = [
+            "s3:PutObject",
+            "s3:GetObject",
+            "s3:GetObjectVersion",
+            "s3:GetBucketAcl",
+            "s3:GetBucketLocation",
+          ]
+          Effect = "Allow"
+          Resource = [
+            "${aws_s3_bucket.codepipeline.arn}/*"
           ]
         },
       ]
