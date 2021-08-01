@@ -8,12 +8,12 @@ provider "aws" {
 
 data "aws_caller_identity" "self" {}
 
-data "aws_codecommit_repository" "simple_bratch" {
-  repository_name = "simple_bratch"
+data "aws_codecommit_repository" "simple_batch" {
+  repository_name = "simple_batch"
 }
 
-data "aws_ecr_repository" "simple_bratch" {
-  name = "simple_bratch"
+data "aws_ecr_repository" "simple_batch" {
+  name = "simple_batch"
 }
 
 data "template_file" "buildspec" {
@@ -21,7 +21,7 @@ data "template_file" "buildspec" {
 
   vars = {
     region         = var.region
-    tag            = "${data.aws_ecr_repository.simple_bratch.name}:${var.release_tag}"
-    repository_tag = "${data.aws_ecr_repository.simple_bratch.repository_url}:${var.release_tag}"
+    tag            = "${data.aws_ecr_repository.simple_batch.name}:${var.release_tag}"
+    repository_tag = "${data.aws_ecr_repository.simple_batch.repository_url}:${var.release_tag}"
   }
 }

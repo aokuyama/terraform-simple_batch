@@ -1,10 +1,10 @@
-resource "aws_codebuild_project" "simple_bratch" {
+resource "aws_codebuild_project" "simple_batch" {
   name         = var.project_name
   service_role = aws_iam_role.codebuild.arn
   source {
     git_clone_depth     = 1
     insecure_ssl        = false
-    location            = data.aws_codecommit_repository.simple_bratch.clone_url_http
+    location            = data.aws_codecommit_repository.simple_batch.clone_url_http
     report_build_status = false
     type                = "CODECOMMIT"
 
@@ -111,7 +111,7 @@ resource "aws_iam_policy" "git_pull" {
           ]
           Effect = "Allow"
           Resource = [
-            data.aws_codecommit_repository.simple_bratch.arn
+            data.aws_codecommit_repository.simple_batch.arn
           ]
         }
       ]

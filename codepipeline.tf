@@ -1,4 +1,4 @@
-resource "aws_codepipeline" "simple_bratch" {
+resource "aws_codepipeline" "simple_batch" {
   name     = var.project_name
   role_arn = aws_iam_role.codepipeline.arn
 
@@ -16,7 +16,7 @@ resource "aws_codepipeline" "simple_bratch" {
         "BranchName"           = var.release_branch
         "OutputArtifactFormat" = "CODE_ZIP"
         "PollForSourceChanges" = "false"
-        "RepositoryName"       = data.aws_codecommit_repository.simple_bratch.repository_name
+        "RepositoryName"       = data.aws_codecommit_repository.simple_batch.repository_name
       }
       input_artifacts = []
       name            = "Source"
@@ -37,7 +37,7 @@ resource "aws_codepipeline" "simple_bratch" {
     action {
       category = "Build"
       configuration = {
-        "ProjectName" = aws_codebuild_project.simple_bratch.name
+        "ProjectName" = aws_codebuild_project.simple_batch.name
       }
       input_artifacts = [
         "SourceArtifact",
