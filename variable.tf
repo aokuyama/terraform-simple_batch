@@ -3,6 +3,11 @@ variable "region" {
   default = "ap-northeast-1"
 }
 
+variable "vpc_id" {
+  type    = string
+  default = "vpc-xxxxxxxx"
+}
+
 variable "project_name" {
   type    = string
   default = "simple-batch"

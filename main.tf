@@ -25,3 +25,15 @@ data "template_file" "buildspec" {
     repository_tag = "${data.aws_ecr_repository.simple_batch.repository_url}:${var.release_tag}"
   }
 }
+
+data "aws_vpc" "selected" {
+  id = var.vpc_id
+}
+
+data "aws_subnet_ids" "selected" {
+  vpc_id = data.aws_vpc.selected.id
+  filter {
+    name   = "tag:Name"
+    values = ["*-public"]
+  }
+}
