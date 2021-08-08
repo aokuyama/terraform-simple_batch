@@ -22,3 +22,21 @@ variable "release_tag" {
   type    = string
   default = "release"
 }
+
+variable "batch-environment" {
+  type = list(object({
+    name  = string
+    value = string
+  }))
+
+  default = []
+}
+
+variable "batch-secrets" {
+  type = list(object({
+    name      = string
+    valueFrom = string
+  }))
+
+  default = []
+}

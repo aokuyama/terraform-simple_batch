@@ -40,13 +40,13 @@ resource "aws_batch_job_definition" "simple_batch" {
     {
       command     = []
       image       = data.aws_ecr_repository.simple_batch.repository_url
-      environment = []
+      environment = var.batch-environment
       linuxParameters = {
         devices = []
         tmpfs   = []
       }
       mountPoints      = []
-      secrets          = []
+      secrets          = var.batch-secrets
       ulimits          = []
       volumes          = []
       jobRoleArn       = aws_iam_role.job_role.arn
@@ -88,6 +88,7 @@ resource "aws_iam_role" "job_role" {
   )
   managed_policy_arns = [
     "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
+    aws_iam_policy.secret-param.arn,
   ]
 }
 
@@ -100,4 +101,21 @@ resource "aws_batch_job_queue" "simple_batch" {
   lifecycle {
     create_before_destroy = true
   }
+}
+
+resource "aws_iam_policy" "secret-param" {
+  policy = jsonencode(
+    {
+      Statement = [
+        {
+          Action = [
+            "ssm:GetParameters",
+          ]
+          Effect   = "Allow"
+          Resource = "*"
+        },
+      ]
+      Version = "2012-10-17"
+    }
+  )
 }
