@@ -40,3 +40,23 @@ variable "batch-secrets" {
 
   default = []
 }
+
+variable "rule_name" {
+  type    = string
+  default = "simple-batch"
+}
+
+variable "schedule" {
+  type    = string
+  default = "cron(0 10 * * ? *)"
+}
+
+variable "description" {
+  type    = string
+  default = "Job description."
+}
+
+variable "command" {
+  type    = list(string)
+  default = []
+}
