@@ -39,7 +39,7 @@ resource "aws_batch_job_definition" "simple_batch" {
   container_properties = jsonencode(
     {
       command     = []
-      image       = data.aws_ecr_repository.simple_batch.repository_url
+      image       = "${data.aws_ecr_repository.simple_batch.repository_url}:${var.release_tag}"
       environment = var.batch-environment
       linuxParameters = {
         devices = []
