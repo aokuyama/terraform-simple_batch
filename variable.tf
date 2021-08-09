@@ -60,3 +60,18 @@ variable "command" {
   type    = list(string)
   default = []
 }
+
+variable "max-vcpus" {
+  type    = number
+  default = 1
+}
+
+variable "task-vcpu" {
+  type    = number
+  default = 0.25
+}
+
+variable "task-memory" {
+  type    = number
+  default = 512
+}

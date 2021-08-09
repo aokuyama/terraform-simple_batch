@@ -1,7 +1,7 @@
 resource "aws_batch_compute_environment" "simple_batch" {
   compute_environment_name = var.project_name
   compute_resources {
-    max_vcpus = 1
+    max_vcpus = var.max-vcpus
     security_group_ids = [
       aws_security_group.batch_compute_env.id
     ]
@@ -60,11 +60,11 @@ resource "aws_batch_job_definition" "simple_batch" {
       resourceRequirements = [
         {
           type  = "VCPU"
-          value = "0.25"
+          value = tostring(var.task-vcpu)
         },
         {
           type  = "MEMORY"
-          value = "512"
+          value = tostring(var.task-memory)
         }
       ]
     }
