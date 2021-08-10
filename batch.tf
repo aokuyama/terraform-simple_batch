@@ -50,7 +50,7 @@ resource "aws_batch_job_definition" "simple_batch" {
       ulimits          = []
       volumes          = []
       jobRoleArn       = aws_iam_role.job_role.arn
-      executionRoleArn = aws_iam_role.job_role.arn
+      executionRoleArn = aws_iam_role.execution_role.arn
       fargatePlatformConfiguration = {
         platformVersion = "1.4.0"
       }
@@ -81,6 +81,24 @@ resource "aws_iam_role" "job_role" {
           Effect = "Allow"
           Principal = {
             Service = "ecs-tasks.amazonaws.com"
+          }
+        },
+      ]
+    }
+  )
+  managed_policy_arns = []
+}
+
+resource "aws_iam_role" "execution_role" {
+  assume_role_policy = jsonencode(
+    {
+      Version = "2008-10-17"
+      Statement = [
+        {
+          Action = "sts:AssumeRole"
+          Effect = "Allow"
+          Principal = {
+            Service = "ecs-tasks.amazonaws.com",
           }
         },
       ]
